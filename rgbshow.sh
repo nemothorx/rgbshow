@@ -18,10 +18,14 @@ It also shows the equivalent greyscale (via linear approximation method)
 
 !! Script operates on a single 3 hex character RGB string as \$1 ONLY
  (ie, three character shorthand hexidecimal like 'E94'
+
 $($0 E94)
 
-Particularly useful when comparing a range of colours, eg 
-for rgb in 817 a35 c66 e94 ed0 9d5 4d8 2cb 0bc 09c 36b 639 ; do $0 \$rgb ; done
+May be particularly useful when comparing a range of colours, eg 
+
+for rgb in 817 a35 c66 e94 ed0 9d5 4d8 2cb 0bc 09c 36b 639 ; do 
+    $0 \$rgb
+done
 "
     # that example palette is from https://iamkate.com/data/12-bit-rainbow/
 
