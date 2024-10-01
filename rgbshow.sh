@@ -58,26 +58,25 @@ R=${RGB:0:1}
 G=${RGB:1:1}
 B=${RGB:2:1}
 
-echo -n "    $SGR0#$R$G$B ["
+echo -n "  $SGR0#$R$G$B ["
 
 # we should never be travelling wider than about 60 characters anyway, so cub 100 gets us to the first column of the current line.
 # We're going to use this trick a fair bit, so while it doesn't NEED to be used here, it introduces it, and keeps it consistent with later numbers
 tput cub 100
 # 48 characters because we have 16 values, but have a three character block for each value
-# the 48 character block is from positions 10 to 57 (nice and easy relative to expected 0-47 yeah?)
+# the 48 character block is from positions 8 to 55 
 
 # setting up our framing first, then filling in is less character efficient, but it's conceptually neat
 # and the inefficiency likely only relevant if you're on a VERY slow connection
 # (a bit shout out to everyone on 2400 baud in 2024)
-tput cuf 58 
-
+tput cuf 56
 echo -n "] " 
 
-REDPOS=$((0x$R * 3 + 10))
-GRNPOS=$((0x$G * 3 + 10))
-BLUPOS=$((0x$B * 3 + 10))
+REDPOS=$((0x$R * 3 + 8))
+GRNPOS=$((0x$G * 3 + 8))
+BLUPOS=$((0x$B * 3 + 8))
 
-# our main colours, in position
+# our main colours, in position (but visually as max R/G/B)
 tput cub 100 ; tput cuf $REDPOS
 printf "${REDBG}${WHITEFG}${R}__${SGR0}"
 
@@ -100,10 +99,27 @@ printf "${BLUBG}${WHITEFG}__${B}${SGR0}"
 [ $R == $G ] && [ $G == $B ] && tput cub 100 && tput cuf $REDPOS && printf "${WHITEBG}${BLACKFG}${R}${G}${B}${SGR0}"
 
 
+# Let's show the R/G/B as their own values now
+#
+# set our position: 
+tput cub 100 ; tput cuf 58
+
+printf "\033[48;2;%d;%d;%dm" $((0x$R * 16)) 0 0
+printf "\033[38;2;%d;%d;%dm" $((0x$R * 16)) 0 0
+printf "R"
+printf "\033[48;2;%d;%d;%dm" 0 $((0x$G * 16)) 0
+printf "\033[38;2;%d;%d;%dm" 0 $((0x$G * 16)) 0
+printf "G"
+printf "\033[48;2;%d;%d;%dm" 0 0 $((0x$B * 16))
+printf "\033[38;2;%d;%d;%dm" 0 0 $((0x$B * 16)) 
+printf "B"
+
+
+printf "$SGR0 "
+
+
 # now we show the colour that was requested
 
-# set our position: 
-tput cub 100 ; tput cuf 60
 
 # print a four character block of our relevant colour
     # FG and BG identical, with '#RGB' within, as a hedge against one or the other not working
