@@ -16,4 +16,6 @@ A shell loop is an easy way to see a range of colours:
         rgbshow.sh $rgb
     done
 
-(That example rainbow taken from [The 12-bit rainbow palette](https://iamkate.com/data/12-bit-rainbow/))
+![2024-10-01T21:26:17_03b7b597](https://github.com/user-attachments/assets/ff853d41-41b2-4308-8287-c49310e8f009)
+
+(example rainbow taken from [The 12-bit rainbow palette](https://iamkate.com/data/12-bit-rainbow/))
