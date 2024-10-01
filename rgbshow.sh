@@ -106,11 +106,12 @@ printf "${BLUBG}${WHITEFG}__${B}${SGR0}"
 [ $R == $G ] && [ $G == $B ] && tput cub 100 && tput cuf $REDPOS && printf "${WHITEBG}${BLACKFG}${R}${G}${B}${SGR0}"
 
 
-# Let's show the R/G/B as their own values now
+# Let's show the seperate R/G/B channels visually now
 #
 # set our position: 
 tput cub 100 ; tput cuf 58
 
+printf ">"
 printf "\033[48;2;%d;%d;%dm" $((0x$R * 16)) 0 0
 printf "\033[38;2;%d;%d;%dm" $((0x$R * 16)) 0 0
 printf "R"
@@ -121,12 +122,10 @@ printf "\033[48;2;%d;%d;%dm" 0 0 $((0x$B * 16))
 printf "\033[38;2;%d;%d;%dm" 0 0 $((0x$B * 16)) 
 printf "B"
 
-
-printf "$SGR0 "
+printf "$SGR0< "
 
 
 # now we show the colour that was requested
-
 
 # print a four character block of our relevant colour
     # FG and BG identical, with '#RGB' within, as a hedge against one or the other not working
@@ -143,7 +142,7 @@ grey=$(( ( 0x$R$R * 299 + 0x$G$G * 587 +  0x$B$B * 114 )/1000 )) # linear approx
 # set our grey colours
 printf "\033[48;2;%d;%d;%dm" $grey $grey $grey
 printf "\033[38;2;%d;%d;%dm" $grey $grey $grey
-printf "####$SGR0"   # Fill with # because grey colour may not be simple 12bit
+printf "##$SGR0"   # Fill with # because grey colour may not be simple 12bit
 greyhex=$(printf '%x' $grey)
 printf " #%2s%2s%2s" $greyhex $greyhex $greyhex
 
