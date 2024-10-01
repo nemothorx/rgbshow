@@ -10,12 +10,15 @@
 # XXX is the final colour correctly shown
 # YYY would be, if I can calculate it, the greyscale version of it
 
-if [ $1 == "-h" ] ; then
+if [ "${#1}" -ne 3 ] ; then
     echo "
 Provide a one-line visualisation of a 12bit hex colour
- (ie, three character shorthand hexidecimal like '0F8'
-
+ 
 It also shows the equivalent greyscale (via linear approximation method)
+
+!! Script operates on a single 3 hex character RGB string as \$1 ONLY
+ (ie, three character shorthand hexidecimal like 'E94'
+$($0 E94)
 
 Particularly useful when comparing a range of colours, eg 
 for rgb in 817 a35 c66 e94 ed0 9d5 4d8 2cb 0bc 09c 36b 639 ; do $0 \$rgb ; done
@@ -25,9 +28,6 @@ for rgb in 817 a35 c66 e94 ed0 9d5 4d8 2cb 0bc 09c 36b 639 ; do $0 \$rgb ; done
     exit 0
 fi
 
-
-
-[ "${#1}" -ne 3 ] && echo "! I accept a 3 hex RGB string as \$1 ONLY" && exit 1
 
 # primary colours
 REDBG=$(tput setab 196)
