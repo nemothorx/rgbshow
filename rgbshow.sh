@@ -34,10 +34,18 @@ REDBG=$(tput setab 196)
 GRNBG=$(tput setab 46)
 BLUBG=$(tput setab 21)
 
+REDFG=$(tput setaf 196)
+GRNFG=$(tput setaf 46)
+BLUFG=$(tput setaf 21)
+
 # secondary colours
 AQUABG=$(tput setab 51)
 MGNTBG=$(tput setab 201)
 YLLOBG=$(tput setab 226)
+
+AQUAFG=$(tput setaf 51)
+MGNTFG=$(tput setaf 201)
+YLLOFG=$(tput setaf 226)
 
 # black and white
     # this isn't the pure black/white which is 0,15
@@ -81,21 +89,20 @@ tput cub 100 ; tput cuf $REDPOS
 printf "${REDBG}${WHITEFG}${R}__${SGR0}"
 
 tput cub 100 ; tput cuf $GRNPOS
-printf "${GRNBG}${WHITEFG}_${G}_${SGR0}"
+printf "${GRNBG}${BLACKFG}_${G}_${SGR0}"
 
 tput cub 100 ; tput cuf $BLUPOS
 printf "${BLUBG}${WHITEFG}__${B}${SGR0}"
 
 
 # did any of the above doubleup? if so, we replace the original with the relevant secondary colours here
-# * they get black text
 # * yes this is also inefficient by character use. hush. 
 
 [ $R == $G ] && tput cub 100 && tput cuf $REDPOS && printf "${YLLOBG}${BLACKFG}${R}${G}_${SGR0}"
 [ $R == $B ] && tput cub 100 && tput cuf $REDPOS && printf "${MGNTBG}${BLACKFG}${R}_${B}${SGR0}"
 [ $G == $B ] && tput cub 100 && tput cuf $GRNPOS && printf "${AQUABG}${BLACKFG}_${G}${B}${SGR0}"
 
-# and all the same = black text on white bg in the relevant spot
+# and all the same = white bg in the relevant spot
 [ $R == $G ] && [ $G == $B ] && tput cub 100 && tput cuf $REDPOS && printf "${WHITEBG}${BLACKFG}${R}${G}${B}${SGR0}"
 
 
@@ -123,13 +130,13 @@ printf "$SGR0 "
 
 # print a four character block of our relevant colour
     # FG and BG identical, with '#RGB' within, as a hedge against one or the other not working
-printf "\033[48;2;%d;%d;%dm" $((0x$R * 16)) $((0x$G * 16)) $((0x$B * 16))
-printf "\033[38;2;%d;%d;%dm" $((0x$R * 16)) $((0x$G * 16)) $((0x$B * 16))
+printf "\033[48;2;%d;%d;%dm" $((0x$R$R)) $((0x$G$G)) $((0x$B$B))
+printf "\033[38;2;%d;%d;%dm" $((0x$R$R)) $((0x$G$G)) $((0x$B$B))
 printf "#$R$G$B$SGR0"
 
 # and in grey
 
-grey=$(( ( 0x$R * 16 + 0x$G * 16 +  0x$B * 16) /3 )) # simplistic average
+grey=$(( ( 0x$R$R + 0x$G$G +  0x$B$B) /3 )) # simplistic average
 # set our grey colours
 printf "\033[48;2;%d;%d;%dm" $grey $grey $grey
 printf "\033[38;2;%d;%d;%dm" $grey $grey $grey
