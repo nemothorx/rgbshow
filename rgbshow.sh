@@ -15,7 +15,7 @@ if [ $1 == "-h" ] ; then
 Provide a one-line visualisation of a 12bit hex colour
  (ie, three character shorthand hexidecimal like '0F8'
 
-It also shows the equivalent greyscale, via simplistic (R+B+G)/3 average
+It also shows the equivalent greyscale (via linear approximation method)
 
 Particularly useful when comparing a range of colours, eg 
 for rgb in 817 a35 c66 e94 ed0 9d5 4d8 2cb 0bc 09c 36b 639 ; do $0 \$rgb ; done
@@ -136,7 +136,10 @@ printf "#$R$G$B$SGR0"
 
 # and in grey
 
-grey=$(( ( 0x$R$R + 0x$G$G +  0x$B$B) /3 )) # simplistic average
+# grey=$(( ( 0x$R$R + 0x$G$G +  0x$B$B) /3 )) # simplistic average
+grey=$(( ( 0x$R$R * 299 + 0x$G$G * 587 +  0x$B$B * 114 )/1000 )) # linear approximation greyscale method
+    # linear approx as per https://e2eml.school/convert_rgb_to_grayscale
+
 # set our grey colours
 printf "\033[48;2;%d;%d;%dm" $grey $grey $grey
 printf "\033[38;2;%d;%d;%dm" $grey $grey $grey
