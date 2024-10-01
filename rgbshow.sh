@@ -79,13 +79,13 @@ BLUPOS=$((0x$B * 3 + 10))
 
 # our main colours, in position
 tput cub 100 ; tput cuf $REDPOS
-printf "${REDBG}${R}__${SGR0}"
+printf "${REDBG}${WHITEFG}${R}__${SGR0}"
 
 tput cub 100 ; tput cuf $GRNPOS
-printf "${GRNBG}_${G}_${SGR0}"
+printf "${GRNBG}${WHITEFG}_${G}_${SGR0}"
 
 tput cub 100 ; tput cuf $BLUPOS
-printf "${BLUBG}__${B}${SGR0}"
+printf "${BLUBG}${WHITEFG}__${B}${SGR0}"
 
 
 # did any of the above doubleup? if so, we replace the original with the relevant secondary colours here
