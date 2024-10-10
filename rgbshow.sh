@@ -147,6 +147,8 @@ do_showrgb() {
 }
 
 
+[ -z "$1" ] && do_showhelp
+
 while [ -n "$1" ] ; do
     
     if [ "${1}" == "-h" ] ; then
